@@ -1,0 +1,17 @@
+services:
+  mongo:
+    image: mongo:4.4.3
+    restart: always
+    volumes:
+      - /root/mongo:/data/db
+  tcqs:
+    build: TCQ_website
+    environment:
+      - SESSION_SECRET
+      - MONGO_URL=mongodb://mongo:27017/
+    links:
+      - mongo
+    volumes:
+      - /root/uploads:/app/public/uploads
+    ports:
+      - "3000:3000"
